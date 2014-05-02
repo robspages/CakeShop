@@ -1,6 +1,6 @@
 <?php
-App::uses('AppModel', 'Model');
-class Tag extends AppModel {
+App::uses('CakeShopAppModel', 'Model');
+class Tag extends CakeShopAppModel {
 
 ////////////////////////////////////////////////////////////
 

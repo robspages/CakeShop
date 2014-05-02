@@ -1,6 +1,6 @@
 <?php
-App::uses('AppModel', 'Model');
-class Cart extends AppModel {
+App::uses('CakeShopAppModel', 'Model');
+class Cart extends CakeShopAppModel {
 
 ////////////////////////////////////////////////////////////
 

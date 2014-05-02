@@ -1,5 +1,5 @@
 <?php
-class Mysqldump extends AppModel {
+class Mysqldump extends CakeShopAppModel {
 
 	public $useTable = false;
 

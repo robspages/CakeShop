@@ -1,6 +1,6 @@
 <?php
-App::uses('AppModel', 'Model');
-class Brand extends AppModel {
+App::uses('CakeShopAppModel', 'Model');
+class Brand extends CakeShopAppModel {
 
 ////////////////////////////////////////////////////////////
 
