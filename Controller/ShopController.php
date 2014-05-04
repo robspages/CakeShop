@@ -1,6 +1,6 @@
 <?php
-App::uses('AppController', 'Controller');
-class ShopController extends AppController {
+App::uses('CakeShop.CakeShopAppController', 'Controller');
+class ShopController extends CakeShopAppController {
 
 //////////////////////////////////////////////////
 

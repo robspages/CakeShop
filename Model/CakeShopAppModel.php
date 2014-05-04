@@ -1,6 +1,6 @@
 <?php
 App::uses('Model', 'Model');
-class CakeShopAppModel extends Model {
+class CakeShopAppModel extends AppModel {
 
 ////////////////////////////////////////////////////////////
 
