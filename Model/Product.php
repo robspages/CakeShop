@@ -82,10 +82,10 @@ class Product extends CakeShopAppModel {
 
 ////////////////////////////////////////////////////////////
 
-	public $hasMany = array(
+	/*public $hasMany = array(
 		'Productmod'
 	);
-
+*/
 ////////////////////////////////////////////////////////////
 
 	public function updateViews($products) {

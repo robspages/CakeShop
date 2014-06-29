@@ -22,7 +22,7 @@ $(document).ready(function() {
 <div class="row">
 
 	<div class="col col-sm-7">
-	<?php echo $this->Html->Image('/images/large/' . $product['Product']['image'], array('alt' => $product['Product']['name'], 'class' => 'img-thumbnail img-responsive')); ?>
+	<?php echo $this->Html->Image('/img/large/' . $product['Product']['image'], array('alt' => $product['Product']['name'], 'class' => 'img-thumbnail img-responsive')); ?>
 	</div>
 
 	<div class="col col-sm-5">
@@ -37,21 +37,10 @@ $(document).ready(function() {
 		<br />
 		<br />
 
-		<?php echo $this->Form->create(NULL, array('url' => array('controller' => 'shop', 'action' => 'add'))); ?>
-		<?php echo $this->Form->input('id', array('type' => 'hidden', 'value' => $product['Product']['id'])); ?>
-
-		<?php if(!empty($productmodshtml)):?>
-
-			<div class="row">
-  			<div class="col-sm-5">
-			<span style="font-weight:bold">Product Options:</span> <?php echo $productmodshtml;?>
-			</div>
-			</div>
-			<br />
-			<input type="hidden" id="modselected" value="" />
-
-		<?php endif;?>
-
+		<?php echo $this->Form->create(NULL, array('url' => array('controller' => 'carts', 'action' => 'add'))); ?>
+		<?php echo $this->Form->input('product_id', array('type' => 'hidden', 'value' => $product['Product']['id'])); ?>
+		<label>Qty:</label><input type="number" min="0" value="1" id="qty" name="qty" /> 
+	
 		<?php echo $this->Form->button('Add to Cart', array('class' => 'btn btn-primary addtocart', 'id' => 'addtocart', 'id' => $product['Product']['id']));?>
 		<?php echo $this->Form->end(); ?>
 

@@ -1,5 +1,5 @@
 <?php
-App::uses('AppController', 'Controller');
+App::uses('CakeShop.CakeShopController', 'Controller');
 class ProductsController extends AppController {
 
 ////////////////////////////////////////////////////////////
@@ -72,6 +72,8 @@ class ProductsController extends AppController {
 
 	public function view($id = null) {
 
+		CakeLog::write("debug", "cakeShop View $id: " . $id); 
+
 		$product = $this->Product->find('first', array(
 			'recursive' => -1,
 			'contain' => array(
@@ -85,6 +87,7 @@ class ProductsController extends AppController {
 			)
 		));
 		if (empty($product)) {
+			CakeLog::write("debug", "cakeShop couldn't find a product for $id:" . $id); 
 			return $this->redirect(array('action' => 'index'), 301);
 		}
 
@@ -92,8 +95,8 @@ class ProductsController extends AppController {
 
 		$this->set(compact('product'));
 
-		$productmods = $this->Product->Productmod->getAllProductMods($product['Product']['id'], $product['Product']['price']);
-		$this->set('productmodshtml', $productmods['productmodshtml']);
+		//$productmods = $this->Product->Productmod->getAllProductMods($product['Product']['id'], $product['Product']['price']);
+		//$this->set('productmodshtml', $productmods['productmodshtml']);
 
 		$this->set('title_for_layout', $product['Product']['name'] . ' ' . Configure::read('Settings.SHOP_TITLE'));
 

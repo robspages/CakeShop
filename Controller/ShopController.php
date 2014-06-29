@@ -1,13 +1,13 @@
 <?php
-App::uses('CakeShop.CakeShopAppController', 'Controller');
-class ShopController extends CakeShopAppController {
+App::uses('AppController', 'Controller');
+class ShopController extends AppController {
 
 //////////////////////////////////////////////////
 
 	public $components = array(
-		'Cart',
-		'Paypal',
-		'AuthorizeNet'
+		'CakeShop.Cart',
+		'CakeShop.Paypal',
+		'CakeShop.AuthorizeNet'
 	);
 
 //////////////////////////////////////////////////
@@ -39,7 +39,7 @@ class ShopController extends CakeShopAppController {
 
 			$quantity = isset($this->request->data['Product']['quantity']) ? $this->request->data['Product']['quantity'] : null;
 
-			$productmodId = isset($this->request->data['mods']) ? $this->request->data['mods'] : null;
+			$productmodId =  null;//isset($this->request->data['mods']) ? $this->request->data['mods'] : null;
 
 			$product = $this->Cart->add($id, $quantity, $productmodId);
 		}

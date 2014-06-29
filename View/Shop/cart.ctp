@@ -29,7 +29,7 @@ Shopping Cart is empty
 <?php foreach ($shop['OrderItem'] as $key => $item): ?>
 
 	<div class="row" id="row-<?php echo $key; ?>">
-		<div class="col col-sm-1"><?php echo $this->Html->image('/images/small/' . $item['Product']['image'], array('class' => 'px60')); ?></div>
+		<div class="col col-sm-1"><?php echo $this->Html->image('/img/small/' . $item['Product']['image'], array('class' => 'px60')); ?></div>
 		<div class="col col-sm-7">
 			<strong><?php echo $this->Html->link($item['Product']['name'], array('controller' => 'products', 'action' => 'view', 'slug' => $item['Product']['slug'])); ?></strong>
 			<?php

@@ -55,12 +55,12 @@
 	</tr>
 </table>
 
-<?php echo $this->Html->Image('/images/small/' . $product['Product']['image'], array('alt' => $product['Product']['name'], 'class' => 'image')); ?>
+<?php echo $this->Html->Image('/img/small/' . $product['Product']['image'], array('alt' => $product['Product']['name'], 'class' => 'image')); ?>
 
 <br />
 <br />
 
-<?php echo $this->Html->Image('/images/large/' . $product['Product']['image'], array('alt' => $product['Product']['name'], 'class' => 'image')); ?>
+<?php echo $this->Html->Image('/img/large/' . $product['Product']['image'], array('alt' => $product['Product']['name'], 'class' => 'image')); ?>
 
 <br />
 <br />

@@ -14,7 +14,7 @@
 <table class="table-striped table-bordered table-condensed table-hover">
 	<tr>
 		<td valign="top">
-			<?php echo $this->Html->Image('/images/small/' . $product['Product']['image'], array('alt' => $product['Product']['name'], 'class' => 'image')); ?>
+			<?php echo $this->Html->Image('/img/small/' . $product['Product']['image'], array('alt' => $product['Product']['name'], 'class' => 'image')); ?>
 		</td>
 		<td valign="top">
 			Name: <?php echo h($product['Product']['name']); ?>
@@ -90,7 +90,7 @@
 <table class="table-striped table-bordered table-condensed table-hover">
 	<tr>
 		<td valign="top">
-			<?php echo $this->Html->Image('/images/small/' . $neighbors['prev']['Product']['image'], array('alt' => $neighbors['prev']['Product']['name'], 'class' => 'image')); ?>
+			<?php echo $this->Html->Image('/img/small/' . $neighbors['prev']['Product']['image'], array('alt' => $neighbors['prev']['Product']['name'], 'class' => 'image')); ?>
 		</td>
 		<td valign="top">
 			Name: <?php echo h($neighbors['prev']['Product']['name']); ?><br />
@@ -104,7 +104,7 @@
 		&nbsp; &nbsp;
 		</td>
 		<td valign="top">
-			<?php echo $this->Html->Image('/images/small/' . $neighbors['next']['Product']['image'], array('alt' => $neighbors['prev']['Product']['name'], 'class' => 'image')); ?>
+			<?php echo $this->Html->Image('/img/small/' . $neighbors['next']['Product']['image'], array('alt' => $neighbors['prev']['Product']['name'], 'class' => 'image')); ?>
 		</td>
 		<td valign="top">
 			Name: <?php echo h($neighbors['next']['Product']['name']); ?><br />
