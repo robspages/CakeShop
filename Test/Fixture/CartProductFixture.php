@@ -12,12 +12,14 @@ class CartProductFixture extends CakeTestFixture {
  */
 	public $fields = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'primary'),
-		'product_id' => array('type' => 'integer', 'null' => true, 'default' => null),
-		'cart_id' => array('type' => 'integer', 'null' => true, 'default' => null),
-		'qty' => array('type' => 'integer', 'null' => true, 'default' => null),
+		'product_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'index'),
+		'cart_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'index'),
+		'qty' => array('type' => 'integer', 'null' => true, 'default' => '1'),
 		'indexes' => array(
 			'PRIMARY' => array('column' => 'id', 'unique' => 1),
-			'id_UNIQUE' => array('column' => 'id', 'unique' => 1)
+			'id_UNIQUE' => array('column' => 'id', 'unique' => 1),
+			'id_idx' => array('column' => 'product_id', 'unique' => 0),
+			'cart-id_idx' => array('column' => 'cart_id', 'unique' => 0)
 		),
 		'tableParameters' => array('charset' => 'latin1', 'collate' => 'latin1_swedish_ci', 'engine' => 'InnoDB')
 	);

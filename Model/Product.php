@@ -1,117 +1,85 @@
 <?php
-App::uses('CakeShop.CakeShopAppModel', 'Model');
+App::uses('CakeShopAppModel', 'CakeShop.Model');
+/**
+ * Product Model
+ *
+ * @property Category $Category
+ * @property Brand $Brand
+ * @property OrderItem $OrderItem
+ * @property Productmod $Productmod
+ */
 class Product extends CakeShopAppModel {
 
-////////////////////////////////////////////////////////////
 
-	public $validate = array(
-		'name' => array(
-			'rule1' => array(
-				'rule' => array('between', 3, 60),
-				'message' => 'Name is required',
-				'allowEmpty' => false,
-				'required' => false,
-			),
-			'rule2' => array(
-				'rule' => array('isUnique'),
-				'message' => 'Name already exists',
-				'allowEmpty' => false,
-				'required' => false,
-			),
-		),
-		'slug' => array(
-			'rule1' => array(
-				'rule' => array('between', 3, 50),
-				'message' => 'Slug is required',
-				'allowEmpty' => false,
-				'required' => false,
-			),
-			'rule2' => array(
-				'rule' => '/^[a-z\-]{3,50}$/',
-				'message' => 'Only lowercase letters and dashes, between 3-50 characters',
-				'allowEmpty' => false,
-				'required' => false,
-			),
-			'rule3' => array(
-				'rule' => array('isUnique'),
-				'message' => 'Slug already exists',
-				'allowEmpty' => false,
-				'required' => false,
-			),
-		),
-		'price' => array(
-			'notempty' => array(
-				'rule' => array('decimal'),
-				'message' => 'Price is invalid',
-				//'allowEmpty' => false,
-				//'required' => true,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'weight' => array(
-			'notempty' => array(
-				'rule' => array('decimal'),
-				'message' => 'Weight is invalid',
-				//'allowEmpty' => false,
-				//'required' => true,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-	);
+	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-////////////////////////////////////////////////////////////
-
+/**
+ * belongsTo associations
+ *
+ * @var array
+ */
 	public $belongsTo = array(
 		'Category' => array(
 			'className' => 'Category',
 			'foreignKey' => 'category_id',
 			'conditions' => '',
 			'fields' => '',
-			'order' => '',
+			'order' => ''
 		),
 		'Brand' => array(
 			'className' => 'Brand',
 			'foreignKey' => 'brand_id',
 			'conditions' => '',
 			'fields' => '',
+			'order' => ''
+		)
+	);
+
+/**
+ * hasMany associations
+ *
+ * @var array
+ */
+	public $hasMany = array(
+		'OrderItem' => array(
+			'className' => 'OrderItem',
+			'foreignKey' => 'product_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
 			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
 		),
+		'CartLinks' => array(
+			'className' => 'CartProduct',
+			'foreignKey' => 'product_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		),
+		'Productmod' => array(
+			'className' => 'Productmod',
+			'foreignKey' => 'product_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		)
 	);
-
-////////////////////////////////////////////////////////////
-
-	/*public $hasMany = array(
-		'Productmod'
-	);
-*/
-////////////////////////////////////////////////////////////
-
-	public function updateViews($products) {
-
-		if(!isset($products[0])) {
-			$a = $products;
-			unset($products);
-			$products[0] = $a;
-		}
-
-		$this->unbindModel(
-			array('belongsTo' => array('Category', 'Brand'))
-		);
-
-		$productIds = Set::extract('/Product/id', $products);
-
-		$this->updateAll(
-			array(
-				'Product.views' => 'Product.views + 1',
-			),
-			array('Product.id' => $productIds)
-		);
-
-
-	}
-
-////////////////////////////////////////////////////////////
 
 }

@@ -1,64 +1,67 @@
 <?php echo $this->Html->script(array('addtocart.js'), array('inline' => false)); ?>
 
-<?php
-$this->Html->addCrumb($product['Brand']['name'], array('controller' => 'brands', 'action' => 'view', 'slug' => $product['Brand']['slug']));
-$this->Html->addCrumb($product['Category']['name'], array('controller' => 'categories', 'action' => 'view', 'slug' => $product['Category']['slug']));
-$this->Html->addCrumb($product['Product']['name']);
-?>
-
 <script>
-$(document).ready(function() {
+	$( document ).ready(function() {
 
-	$('#modselector').change(function(){
-		$('#productprice').html($(this).find(':selected').data('price'));
-		$('#modselected').val($(this).find(':selected').val());
+		function updateCart(){
+			$.ajax({
+				type: 'GET',
+				url: '<?php echo $this->Html->url(array('plugin' => 'cake_shop', 'controller' => 'carts','action' => 'cartCount'),true);?>',
+				success:function(data){
+				    $('.cartData').html(data);
+				},
+				error:function(data){
+				    $('.cartData').html("There was an error with the cart funciton. Please try again later.");
+				},
+				timeout: 2500
+			});
+		}
+
+		updateCart(); 
+
+		$('#addtocart').click(function(e){
+			e.preventDefault();
+			$.ajax({
+				type: 'POST',
+				url: '<?php echo $this->Html->url(array('plugin' => 'cake_shop', 'controller' => 'carts','action' => 'add'),true);?>',
+				data: $("#buyBox").serialize(),
+				success:function(data){
+				    $('.msg').html("Your item was successfully added to cart");
+				    updateCart();
+				},
+				error:function(){
+				    $('.msg').html("There was an error with the cart funciton. Please try again later.");
+				},
+				timeout: 5000
+			});
+			return false;
+		});
 	});
 
-});
 </script>
-
-<h1><?php echo $product['Product']['name']; ?></h1>
-
 <div class="row">
-
+	<!-- Look up google product format --> 
+	<p class="msg"></p>
+	<p class="cartData"></p>
+	<h3><?php echo $product['Product']['name']; ?></h3>
 	<div class="col col-sm-7">
-	<?php echo $this->Html->Image('/img/large/' . $product['Product']['image'], array('alt' => $product['Product']['name'], 'class' => 'img-thumbnail img-responsive')); ?>
+		<?php echo $this->Html->Image('/img/small/' . $product['Product']['image'], array('alt' => $product['Product']['name'], 'class' => 'img-thumbnail img-responsive')); ?>
 	</div>
-
 	<div class="col col-sm-5">
-
-		<strong><?php echo $product['Product']['name']; ?></strong>
-
-		<br />
-		<br />
-
-		$ <span id="productprice"><?php echo $product['Product']['price']; ?></span>
-
-		<br />
-		<br />
-
-		<?php echo $this->Form->create(NULL, array('url' => array('controller' => 'carts', 'action' => 'add'))); ?>
-		<?php echo $this->Form->input('product_id', array('type' => 'hidden', 'value' => $product['Product']['id'])); ?>
-		<label>Qty:</label><input type="number" min="0" value="1" id="qty" name="qty" /> 
-	
-		<?php echo $this->Form->button('Add to Cart', array('class' => 'btn btn-primary addtocart', 'id' => 'addtocart', 'id' => $product['Product']['id']));?>
-		<?php echo $this->Form->end(); ?>
-
-		<br />
-
+	 	<span id="productprice">$<?php echo $product['Product']['price']; ?></span>
+		<form id="buyBox">
+			<input type="hidden" name="product_id" id="product_id" value="<?php echo $product['Product']['id']; ?>" />
+			<label>Qty:</label><input type="number" min="0" value="1" id="qty" name="qty" /> 
+			<input type="submit" value='Add to Cart' class="btn btn-primary addtocart" id='addtocart' />
+		</form>
+	</div>
+	<div class="product-desc">
 		<?php echo $product['Product']['description']; ?>
-
-		<br />
-		<br />
-
-		Brand: <?php echo $this->Html->link($product['Brand']['name'], array('controller' => 'brands', 'action' => 'view', 'slug' => $product['Brand']['slug'])); ?>
-
-		<br />
-
-		Category: <?php echo $this->Html->link($product['Category']['name'], array('controller' => 'categories', 'action' => 'view', 'slug' => $product['Category']['slug'])); ?>
-
-		<br />
-
 	</div>
 
+	<ul>
+		<li>Brand: <?php echo $this->Html->link($product['Brand']['name'], array('controller' => 'brands', 'action' => 'view', 'slug' => $product['Brand']['slug'])); ?></li>
+
+		<li>Category: <?php echo $this->Html->link($product['Category']['name'], array('controller' => 'categories', 'action' => 'view', 'slug' => $product['Category']['slug'])); ?></li>
+	</ul>
 </div>
