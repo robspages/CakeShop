@@ -8,6 +8,8 @@ App::uses('CakeShopAppModel', 'CakeShop.Model');
  */
 class CartProduct extends CakeShopAppModel {
 
+
+	public $recursive = 1;
 /**
  * Validation rules
  *
@@ -43,20 +45,5 @@ class CartProduct extends CakeShopAppModel {
  *
  * @var array
  */
-	public $hasManyAndBelongsTo = array(
-		'Product' => array(
-			'className' => 'Product',
-			'foreignKey' => 'product_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		),
-		'Cart' => array(
-			'className' => 'Cart',
-			'foreignKey' => 'cart_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		)
-	);
+	public $belongsTo = array('Cart', 'Product'); 
 }

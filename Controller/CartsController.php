@@ -28,10 +28,11 @@ class CartsController extends AppController {
 		$products = $this->getCartProducts($cart, null);
 		$stats = array("count" => 0, "subtotal" => 0); 
 		$this->debugLog("CartProducts Object Array: " . json_encode($products));
-  		foreach($products as $product)
+		foreach($products as $product)
   		{
+  			print_r($product);
   			$stats['count'] = $stats['count'] + $product['CartProduct']['qty'];
-  			$stats['subtotal'] = $stats['subtotal'] + ($product['Product']['Price'] * $product['CartProduct']['qty']);	
+  			$stats['subtotal'] = $stats['subtotal'] + ($product['Product']['price'] * $product['CartProduct']['qty']);	
   		}
   		$this->debugLog("Stats Object: " . json_encode($stats));
   		return json_encode($stats); 
@@ -86,8 +87,6 @@ class CartsController extends AppController {
 	}
 
 
-
-
 	/* Private Helper methods */ 
 
 	/**
@@ -96,17 +95,20 @@ class CartsController extends AppController {
 	*/ 
 	private function getCartProducts($cart, $product_id)
 	{
-		$this->loadModel('CartProduct');
+		
+
+		$this->loadModel('CakeShop.CartProduct');
 		$conditions = ($product_id === null ?
 							array('cart_id' => $cart['Cart']['id']) : 
 						    array('cart_id' => $cart['Cart']['id'],
 								  'product_id' => $product_id)
 					   ); 
+		$this->loadModel('CakeShop.Product');
 
-		$products = $this->CartProduct->find("first", 
+		$products = $this->CartProduct->find("all", 
 			array(
-				'recursive' => 2,
-				//'contain' => array('Product'),
+				'recursive' => 0,
+				'contain' => array('Product'),
 				'conditions' => $conditions
 			)
 		);

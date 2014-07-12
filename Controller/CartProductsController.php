@@ -4,7 +4,7 @@ App::uses('AppController', 'Controller');
  * CartProducts Controller
  *
  */
-class CartProductsController extends AppController {
+class CartsProductsController extends AppController {
 
 /**
  * Scaffold

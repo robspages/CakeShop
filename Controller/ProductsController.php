@@ -32,9 +32,6 @@ class ProductsController extends AppController {
 			)
 		));
 		$this->set(compact('products'));
-
-		$this->Product->updateViews($products);
-
 		$this->set('title_for_layout', Configure::read('Settings.SHOP_TITLE'));
 	}
 
@@ -90,8 +87,6 @@ class ProductsController extends AppController {
 			CakeLog::write("debug", "cakeShop couldn't find a product for $id:" . $id); 
 			return $this->redirect(array('action' => 'index'), 301);
 		}
-
-		$this->Product->updateViews($product);
 
 		$this->set(compact('product'));
 

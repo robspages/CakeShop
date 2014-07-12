@@ -10,8 +10,7 @@ App::uses('CakeShopAppModel', 'CakeShop.Model');
  */
 class Product extends CakeShopAppModel {
 
-
-	//The Associations below have been created with all possible keys, those that are not needed can be removed
+	public $actAs = array('Containable'); 
 
 /**
  * belongsTo associations
@@ -35,51 +34,13 @@ class Product extends CakeShopAppModel {
 		)
 	);
 
-/**
- * hasMany associations
- *
- * @var array
- */
-	public $hasMany = array(
-		'OrderItem' => array(
-			'className' => 'OrderItem',
-			'foreignKey' => 'product_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
-		'CartLinks' => array(
-			'className' => 'CartProduct',
-			'foreignKey' => 'product_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
-		'Productmod' => array(
-			'className' => 'Productmod',
-			'foreignKey' => 'product_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		)
-	);
+	/*public $hasAndBelongsToMany = array(
+		'ShoppingCarts' => array(
+				'className' => 'Cart',
+				'joinTable' => 'cart_products',
+				'foreignKey' => 'product_id',
+				'associationForeignKey' => 'cart_id' 
+			)
 
+	);*/
 }

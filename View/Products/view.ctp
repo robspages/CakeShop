@@ -47,6 +47,7 @@
 	<div class="col col-sm-7">
 		<?php echo $this->Html->Image('/img/small/' . $product['Product']['image'], array('alt' => $product['Product']['name'], 'class' => 'img-thumbnail img-responsive')); ?>
 	</div>
+	<a href="#" onclick="javascript:updateCart()" />Update</a>
 	<div class="col col-sm-5">
 	 	<span id="productprice">$<?php echo $product['Product']['price']; ?></span>
 		<form id="buyBox">
