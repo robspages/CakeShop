@@ -30,9 +30,18 @@ class CartsController extends AppController {
 		$this->debugLog("CartProducts Object Array: " . json_encode($products));
 		foreach($products as $product)
   		{
-  			print_r($product);
+  			
   			$stats['count'] = $stats['count'] + $product['CartProduct']['qty'];
-  			$stats['subtotal'] = $stats['subtotal'] + ($product['Product']['price'] * $product['CartProduct']['qty']);	
+  			$stats['subtotal'] = $stats['subtotal'] + ($product['Product']['price'] * $product['CartProduct']['qty']);
+  			if(isset($stats['products'][$product['Product']['id']]))
+  			{
+  				$stats['products'][$product['Product']['id']]['qty']++; 
+  			}
+  			else
+  			{
+  				$stats['products'][$product['Product']['id']] = $product['Product'];
+  				$stats['products'][$product['Product']['id']]['qty'] = $product['CartProduct']['qty'];
+  			}
   		}
   		$this->debugLog("Stats Object: " . json_encode($stats));
   		return json_encode($stats); 
@@ -51,24 +60,24 @@ class CartsController extends AppController {
 		{
 
 			$product_id = $_POST['product_id']; 
+			$this->debugLog("Add to cart Post: " . json_encode($_POST));
 			$qty = $_POST['qty']; 
 
 			$cart = $this->findCart(); 
 			$this->debugLog("Cart Object: " . json_encode($cart));
-			// products in cart already? 
-			$this->loadModel('CartProduct');
-			$products = $this->getCartProducts($cart, $product_id);
-			if (!empty($products))
+				
+			$this->loadModel('CakeShop.CartProduct');
+			$this->CartProduct->find('first', array('conditions' => array('cart_id' => $cart['Cart']['id'], 'product_id' => $product_id)));
+			if($this->CartProduct->id > 0)
 			{
-				$products->Qty = $products->Qty + $qty;
-				$products->save(); 
+				$this->CartProduct->set('qty',$this->CartProduct->qty + $qty);
 			}
 			else
 			{
 				$this->CartProduct->create();
 				$this->CartProduct->set(array("cart_id" => $cart["Cart"]['id'], "product_id" => $product_id, "Qty" => $qty));
-				$this->CartProduct->save(); 
 			}
+			$this->CartProduct->save(); 
 			return "yay";
 		}
 		else
@@ -96,22 +105,24 @@ class CartsController extends AppController {
 	private function getCartProducts($cart, $product_id)
 	{
 		
-
 		$this->loadModel('CakeShop.CartProduct');
+		$this->loadModel('CakeShop.Product');
+		
 		$conditions = ($product_id === null ?
 							array('cart_id' => $cart['Cart']['id']) : 
 						    array('cart_id' => $cart['Cart']['id'],
 								  'product_id' => $product_id)
-					   ); 
-		$this->loadModel('CakeShop.Product');
+					   );
+		
 
 		$products = $this->CartProduct->find("all", 
 			array(
-				'recursive' => 0,
 				'contain' => array('Product'),
 				'conditions' => $conditions
 			)
 		);
+
+		$this->debugLog('CartProducts Returned: ' . json_encode($products));
 		return $products; 
 	}
 
