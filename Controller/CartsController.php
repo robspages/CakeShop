@@ -107,10 +107,10 @@ class CartsController extends AppController {
 		
 		$this->loadModel('CakeShop.CartProduct');
 		$this->loadModel('CakeShop.Product');
-		
+		$this->debugLog("cart object in GetCartProducts: " . json_encode($cart) );
 		$conditions = ($product_id === null ?
-							array('cart_id' => $cart['Cart']['id']) : 
-						    array('cart_id' => $cart['Cart']['id'],
+							array('cart_id' => $cart['cart']['id']) : 
+						    array('cart_id' => $cart['cart']['id'],
 								  'product_id' => $product_id)
 					   );
 		
@@ -129,7 +129,7 @@ class CartsController extends AppController {
 	private function findCart ()
 	{
 		$cartID = session_id();
-		CakeLog::write("debug", "cakeShop View id: " . $cartID); 
+		CakeLog::write("debug", "cakeShop session id: " . $cartID); 
 		$cart = $this->Cart->find('first', array(
 			'recursive' => -1,
 			'conditions' => array('sessionid' => $cartID)
@@ -141,7 +141,10 @@ class CartsController extends AppController {
 			$now = date("Y-m-d H:i:s");
 			$this->Cart->set(array("sessionid" => $cartID, "created" => $now, "modified" => $now));
 			$this->Cart->save();
-			$cart = $this->Cart; 
+			$cart = $this->Cart->find('first', array(
+				'recursive' => -1,
+				'conditions' => array('sessionid' => $cartID)
+			));
 		}
 		return $cart;
 	}
